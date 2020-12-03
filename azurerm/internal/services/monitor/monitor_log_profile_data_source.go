@@ -10,7 +10,7 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func dataSourceArmMonitorLogProfile() *schema.Resource {
+func dataSourceMonitorLogProfile() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceArmLogProfileRead,
 

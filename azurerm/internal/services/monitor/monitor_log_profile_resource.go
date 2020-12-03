@@ -20,7 +20,7 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func resourceArmMonitorLogProfile() *schema.Resource {
+func resourceMonitorLogProfile() *schema.Resource {
 	return &schema.Resource{
 		Create: resourceArmLogProfileCreateUpdate,
 		Read:   resourceArmLogProfileRead,

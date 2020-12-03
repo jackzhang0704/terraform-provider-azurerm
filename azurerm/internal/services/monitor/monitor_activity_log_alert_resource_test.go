@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -11,18 +11,18 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/internal/clients"
 )
 
-func TestAccAzureRMMonitorActivityLogAlert_basic(t *testing.T) {
+func TestAccMonitorActivityLogAlert_basic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_activity_log_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActivityLogAlertDestroy,
+		CheckDestroy: testCheckMonitorActivityLogAlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_basic(data),
+				Config: testAccMonitorActivityLogAlert_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "1"),
 					resource.TestCheckResourceAttr(data.ResourceName, "criteria.#", "1"),
@@ -35,40 +35,40 @@ func TestAccAzureRMMonitorActivityLogAlert_basic(t *testing.T) {
 	})
 }
 
-func TestAccAzureRMMonitorActivityLogAlert_requiresImport(t *testing.T) {
+func TestAccMonitorActivityLogAlert_requiresImport(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_activity_log_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActivityLogAlertDestroy,
+		CheckDestroy: testCheckMonitorActivityLogAlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_basic(data),
+				Config: testAccMonitorActivityLogAlert_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 				),
 			},
 			{
-				Config:      testAccAzureRMMonitorActivityLogAlert_requiresImport(data),
+				Config:      testAccMonitorActivityLogAlert_requiresImport(data),
 				ExpectError: acceptance.RequiresImportError("azurerm_monitor_activity_log_alert"),
 			},
 		},
 	})
 }
 
-func TestAccAzureRMMonitorActivityLogAlert_singleResource(t *testing.T) {
+func TestAccMonitorActivityLogAlert_singleResource(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_activity_log_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActivityLogAlertDestroy,
+		CheckDestroy: testCheckMonitorActivityLogAlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_singleResource(data),
+				Config: testAccMonitorActivityLogAlert_singleResource(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "1"),
 					resource.TestCheckResourceAttr(data.ResourceName, "criteria.#", "1"),
@@ -83,18 +83,18 @@ func TestAccAzureRMMonitorActivityLogAlert_singleResource(t *testing.T) {
 	})
 }
 
-func TestAccAzureRMMonitorActivityLogAlert_complete(t *testing.T) {
+func TestAccMonitorActivityLogAlert_complete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_activity_log_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActivityLogAlertDestroy,
+		CheckDestroy: testCheckMonitorActivityLogAlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_complete(data),
+				Config: testAccMonitorActivityLogAlert_complete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "description", "This is just a test resource."),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "2"),
@@ -113,18 +113,18 @@ func TestAccAzureRMMonitorActivityLogAlert_complete(t *testing.T) {
 	})
 }
 
-func TestAccAzureRMMonitorActivityLogAlert_basicAndCompleteUpdate(t *testing.T) {
+func TestAccMonitorActivityLogAlert_basicAndCompleteUpdate(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_activity_log_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionGroupDestroy,
+		CheckDestroy: testCheckMonitorActionGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_basic(data),
+				Config: testAccMonitorActivityLogAlert_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "description", ""),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "1"),
@@ -138,9 +138,9 @@ func TestAccAzureRMMonitorActivityLogAlert_basicAndCompleteUpdate(t *testing.T) 
 				),
 			},
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_complete(data),
+				Config: testAccMonitorActivityLogAlert_complete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "description", "This is just a test resource."),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "2"),
@@ -155,9 +155,9 @@ func TestAccAzureRMMonitorActivityLogAlert_basicAndCompleteUpdate(t *testing.T) 
 				),
 			},
 			{
-				Config: testAccAzureRMMonitorActivityLogAlert_basic(data),
+				Config: testAccMonitorActivityLogAlert_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActivityLogAlertExists(data.ResourceName),
+					testCheckMonitorActivityLogAlertExists(data.ResourceName),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
 					resource.TestCheckResourceAttr(data.ResourceName, "description", ""),
 					resource.TestCheckResourceAttr(data.ResourceName, "scopes.#", "1"),
@@ -174,7 +174,7 @@ func TestAccAzureRMMonitorActivityLogAlert_basicAndCompleteUpdate(t *testing.T) 
 	})
 }
 
-func testAccAzureRMMonitorActivityLogAlert_basic(data acceptance.TestData) string {
+func testAccMonitorActivityLogAlert_basic(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -197,8 +197,8 @@ resource "azurerm_monitor_activity_log_alert" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActivityLogAlert_requiresImport(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActivityLogAlert_basic(data)
+func testAccMonitorActivityLogAlert_requiresImport(data acceptance.TestData) string {
+	template := testAccMonitorActivityLogAlert_basic(data)
 	return fmt.Sprintf(`
 %s
 
@@ -214,7 +214,7 @@ resource "azurerm_monitor_activity_log_alert" "import" {
 `, template)
 }
 
-func testAccAzureRMMonitorActivityLogAlert_singleResource(data acceptance.TestData) string {
+func testAccMonitorActivityLogAlert_singleResource(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -257,7 +257,7 @@ resource "azurerm_monitor_activity_log_alert" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomString, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActivityLogAlert_complete(data acceptance.TestData) string {
+func testAccMonitorActivityLogAlert_complete(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -326,7 +326,7 @@ resource "azurerm_monitor_activity_log_alert" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomString, data.RandomInteger)
 }
 
-func testCheckAzureRMMonitorActivityLogAlertDestroy(s *terraform.State) error {
+func testCheckMonitorActivityLogAlertDestroy(s *terraform.State) error {
 	conn := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActivityLogAlertsClient
 	ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
 
@@ -351,7 +351,7 @@ func testCheckAzureRMMonitorActivityLogAlertDestroy(s *terraform.State) error {
 	return nil
 }
 
-func testCheckAzureRMMonitorActivityLogAlertExists(resourceName string) resource.TestCheckFunc {
+func testCheckMonitorActivityLogAlertExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		conn := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActivityLogAlertsClient
 		ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext

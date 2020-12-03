@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -18,18 +18,18 @@ import (
 // this occasionally fails due to the rapid provisioning and deprovisioning,
 // running the exact same test afterwards always results in a pass.
 
-func TestAccAzureRMMonitorLogProfile(t *testing.T) {
+func TestAccMonitorLogProfile(t *testing.T) {
 	testCases := map[string]map[string]func(t *testing.T){
 		"basic": {
-			"basic":          testAccAzureRMMonitorLogProfile_basic,
-			"requiresImport": testAccAzureRMMonitorLogProfile_requiresImport,
-			"servicebus":     testAccAzureRMMonitorLogProfile_servicebus,
-			"complete":       testAccAzureRMMonitorLogProfile_complete,
-			"disappears":     testAccAzureRMMonitorLogProfile_disappears,
+			"basic":          testAccMonitorLogProfile_basic,
+			"requiresImport": testAccMonitorLogProfile_requiresImport,
+			"servicebus":     testAccMonitorLogProfile_servicebus,
+			"complete":       testAccMonitorLogProfile_complete,
+			"disappears":     testAccMonitorLogProfile_disappears,
 		},
 		"datasource": {
-			"eventhub":       testAccDataSourceAzureRMMonitorLogProfile_eventhub,
-			"storageaccount": testAccDataSourceAzureRMMonitorLogProfile_storageaccount,
+			"eventhub":       testAccDataSourceMonitorLogProfile_eventhub,
+			"storageaccount": testAccDataSourceMonitorLogProfile_storageaccount,
 		},
 	}
 
@@ -46,7 +46,7 @@ func TestAccAzureRMMonitorLogProfile(t *testing.T) {
 	}
 }
 
-func testAccAzureRMMonitorLogProfile_basic(t *testing.T) {
+func testAccMonitorLogProfile_basic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_log_profile", "test")
 
 	resource.Test(t, resource.TestCase{
@@ -55,7 +55,7 @@ func testAccAzureRMMonitorLogProfile_basic(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorLogProfile_basicConfig(data),
+				Config: testAccMonitorLogProfile_basicConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckAzureRMLogProfileExists(data.ResourceName),
 				),
@@ -65,7 +65,7 @@ func testAccAzureRMMonitorLogProfile_basic(t *testing.T) {
 	})
 }
 
-func testAccAzureRMMonitorLogProfile_requiresImport(t *testing.T) {
+func testAccMonitorLogProfile_requiresImport(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_log_profile", "test")
 
 	resource.Test(t, resource.TestCase{
@@ -74,20 +74,20 @@ func testAccAzureRMMonitorLogProfile_requiresImport(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorLogProfile_basicConfig(data),
+				Config: testAccMonitorLogProfile_basicConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckAzureRMLogProfileExists(data.ResourceName),
 				),
 			},
 			{
-				Config:      testAccAzureRMMonitorLogProfile_requiresImportConfig(data),
+				Config:      testAccMonitorLogProfile_requiresImportConfig(data),
 				ExpectError: acceptance.RequiresImportError("azurerm_monitor_log_profile"),
 			},
 		},
 	})
 }
 
-func testAccAzureRMMonitorLogProfile_servicebus(t *testing.T) {
+func testAccMonitorLogProfile_servicebus(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_log_profile", "test")
 
 	resource.Test(t, resource.TestCase{
@@ -96,7 +96,7 @@ func testAccAzureRMMonitorLogProfile_servicebus(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorLogProfile_servicebusConfig(data),
+				Config: testAccMonitorLogProfile_servicebusConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckAzureRMLogProfileExists(data.ResourceName),
 				),
@@ -105,7 +105,7 @@ func testAccAzureRMMonitorLogProfile_servicebus(t *testing.T) {
 	})
 }
 
-func testAccAzureRMMonitorLogProfile_complete(t *testing.T) {
+func testAccMonitorLogProfile_complete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_log_profile", "test")
 
 	resource.Test(t, resource.TestCase{
@@ -114,7 +114,7 @@ func testAccAzureRMMonitorLogProfile_complete(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorLogProfile_completeConfig(data),
+				Config: testAccMonitorLogProfile_completeConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckAzureRMLogProfileExists(data.ResourceName),
 				),
@@ -123,7 +123,7 @@ func testAccAzureRMMonitorLogProfile_complete(t *testing.T) {
 	})
 }
 
-func testAccAzureRMMonitorLogProfile_disappears(t *testing.T) {
+func testAccMonitorLogProfile_disappears(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_log_profile", "test")
 
 	resource.Test(t, resource.TestCase{
@@ -132,7 +132,7 @@ func testAccAzureRMMonitorLogProfile_disappears(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorLogProfile_basicConfig(data),
+				Config: testAccMonitorLogProfile_basicConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					testCheckAzureRMLogProfileExists(data.ResourceName),
 					testCheckAzureRMLogProfileDisappears(data.ResourceName),
@@ -210,7 +210,7 @@ func testCheckAzureRMLogProfileDisappears(resourceName string) resource.TestChec
 	}
 }
 
-func testAccAzureRMMonitorLogProfile_basicConfig(data acceptance.TestData) string {
+func testAccMonitorLogProfile_basicConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -250,8 +250,8 @@ resource "azurerm_monitor_log_profile" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomString, data.RandomInteger, data.Locations.Primary)
 }
 
-func testAccAzureRMMonitorLogProfile_requiresImportConfig(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorLogProfile_basicConfig(data)
+func testAccMonitorLogProfile_requiresImportConfig(data acceptance.TestData) string {
+	template := testAccMonitorLogProfile_basicConfig(data)
 	return fmt.Sprintf(`
 %s
 
@@ -269,7 +269,7 @@ resource "azurerm_monitor_log_profile" "import" {
 `, template)
 }
 
-func testAccAzureRMMonitorLogProfile_servicebusConfig(data acceptance.TestData) string {
+func testAccMonitorLogProfile_servicebusConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -317,7 +317,7 @@ resource "azurerm_monitor_log_profile" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomString, data.RandomString, data.RandomInteger, data.Locations.Primary)
 }
 
-func testAccAzureRMMonitorLogProfile_completeConfig(data acceptance.TestData) string {
+func testAccMonitorLogProfile_completeConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}

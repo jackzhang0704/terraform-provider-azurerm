@@ -20,12 +20,12 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func resourceArmMonitorActionRuleActionGroup() *schema.Resource {
+func resourceMonitorActionRuleActionGroup() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceArmMonitorActionRuleActionGroupCreateUpdate,
-		Read:   resourceArmMonitorActionRuleActionGroupRead,
-		Update: resourceArmMonitorActionRuleActionGroupCreateUpdate,
-		Delete: resourceArmMonitorActionRuleActionGroupDelete,
+		Create: resourceMonitorActionRuleActionGroupCreateUpdate,
+		Read:   resourceMonitorActionRuleActionGroupRead,
+		Update: resourceMonitorActionRuleActionGroupCreateUpdate,
+		Delete: resourceMonitorActionRuleActionGroupDelete,
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(30 * time.Minute),
@@ -100,7 +100,7 @@ func resourceArmMonitorActionRuleActionGroup() *schema.Resource {
 	}
 }
 
-func resourceArmMonitorActionRuleActionGroupCreateUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionRuleActionGroupCreateUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionRulesClient
 	ctx, cancel := timeouts.ForCreateUpdate(meta.(*clients.Client).StopContext, d)
 	defer cancel()
@@ -153,10 +153,10 @@ func resourceArmMonitorActionRuleActionGroupCreateUpdate(d *schema.ResourceData,
 	}
 
 	d.SetId(*resp.ID)
-	return resourceArmMonitorActionRuleActionGroupRead(d, meta)
+	return resourceMonitorActionRuleActionGroupRead(d, meta)
 }
 
-func resourceArmMonitorActionRuleActionGroupRead(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionRuleActionGroupRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionRulesClient
 	ctx, cancel := timeouts.ForRead(meta.(*clients.Client).StopContext, d)
 	defer cancel()
@@ -194,7 +194,7 @@ func resourceArmMonitorActionRuleActionGroupRead(d *schema.ResourceData, meta in
 	return tags.FlattenAndSet(d, resp.Tags)
 }
 
-func resourceArmMonitorActionRuleActionGroupDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionRuleActionGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionRulesClient
 	ctx, cancel := timeouts.ForDelete(meta.(*clients.Client).StopContext, d)
 	defer cancel()

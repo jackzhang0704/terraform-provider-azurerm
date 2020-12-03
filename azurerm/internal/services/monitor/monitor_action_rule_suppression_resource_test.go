@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -12,18 +12,18 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func TestAccAzureRMMonitorActionRuleSuppression_basic(t *testing.T) {
+func TestAccMonitorActionRuleSuppression_basic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_suppression", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleSuppressionDestroy,
+		CheckDestroy: testCheckMonitorActionRuleSuppressionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_basic(data),
+				Config: testAccMonitorActionRuleSuppression_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -31,83 +31,36 @@ func TestAccAzureRMMonitorActionRuleSuppression_basic(t *testing.T) {
 	})
 }
 
-func TestAccAzureRMMonitorActionRuleSuppression_requiresImport(t *testing.T) {
+func TestAccMonitorActionRuleSuppression_requiresImport(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_suppression", "test")
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleSuppressionDestroy,
+		CheckDestroy: testCheckMonitorActionRuleSuppressionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_basic(data),
+				Config: testAccMonitorActionRuleSuppression_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
 				),
 			},
-			data.RequiresImportErrorStep(testAccAzureRMMonitorActionRuleSuppression_requiresImport),
+			data.RequiresImportErrorStep(testAccMonitorActionRuleSuppression_requiresImport),
 		},
 	})
 }
 
-func TestAccAzureRMMonitorActionRuleSuppression_complete(t *testing.T) {
+func TestAccMonitorActionRuleSuppression_complete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_suppression", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleSuppressionDestroy,
+		CheckDestroy: testCheckMonitorActionRuleSuppressionDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_complete(data),
+				Config: testAccMonitorActionRuleSuppression_complete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-		},
-	})
-}
-
-func TestAccAzureRMMonitorActionRuleSuppression_updateSuppressionConfig(t *testing.T) {
-	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_suppression", "test")
-
-	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acceptance.PreCheck(t) },
-		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleSuppressionDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_basic(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_dailyRecurrence(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_monthlyRecurrence(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_complete(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleSuppression_basic(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleSuppressionExists(data.ResourceName),
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -115,7 +68,54 @@ func TestAccAzureRMMonitorActionRuleSuppression_updateSuppressionConfig(t *testi
 	})
 }
 
-func testCheckAzureRMMonitorActionRuleSuppressionExists(resourceName string) resource.TestCheckFunc {
+func TestAccMonitorActionRuleSuppression_updateSuppressionConfig(t *testing.T) {
+	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_suppression", "test")
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { acceptance.PreCheck(t) },
+		Providers:    acceptance.SupportedProviders,
+		CheckDestroy: testCheckMonitorActionRuleSuppressionDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccMonitorActionRuleSuppression_basic(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleSuppression_dailyRecurrence(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleSuppression_monthlyRecurrence(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleSuppression_complete(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleSuppression_basic(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleSuppressionExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+		},
+	})
+}
+
+func testCheckMonitorActionRuleSuppressionExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActionRulesClient
 		ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
@@ -137,7 +137,7 @@ func testCheckAzureRMMonitorActionRuleSuppressionExists(resourceName string) res
 	}
 }
 
-func testCheckAzureRMMonitorActionRuleSuppressionDestroy(s *terraform.State) error {
+func testCheckMonitorActionRuleSuppressionDestroy(s *terraform.State) error {
 	client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActionRulesClient
 	ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
 
@@ -159,8 +159,8 @@ func testCheckAzureRMMonitorActionRuleSuppressionDestroy(s *terraform.State) err
 	return nil
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_basic(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleSuppression_template(data)
+func testAccMonitorActionRuleSuppression_basic(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleSuppression_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -175,8 +175,8 @@ resource "azurerm_monitor_action_rule_suppression" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_requiresImport(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleSuppression_basic(data)
+func testAccMonitorActionRuleSuppression_requiresImport(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleSuppression_basic(data)
 	return fmt.Sprintf(`
 %s
 
@@ -191,8 +191,8 @@ resource "azurerm_monitor_action_rule_suppression" "import" {
 `, template)
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_complete(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleSuppression_template(data)
+func testAccMonitorActionRuleSuppression_complete(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleSuppression_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -262,8 +262,8 @@ resource "azurerm_monitor_action_rule_suppression" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_dailyRecurrence(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleSuppression_template(data)
+func testAccMonitorActionRuleSuppression_dailyRecurrence(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleSuppression_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -288,8 +288,8 @@ resource "azurerm_monitor_action_rule_suppression" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_monthlyRecurrence(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleSuppression_template(data)
+func testAccMonitorActionRuleSuppression_monthlyRecurrence(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleSuppression_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -315,7 +315,7 @@ resource "azurerm_monitor_action_rule_suppression" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleSuppression_template(data acceptance.TestData) string {
+func testAccMonitorActionRuleSuppression_template(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}

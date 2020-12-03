@@ -18,12 +18,12 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func resourceArmMonitorActionGroup() *schema.Resource {
+func resourceMonitorActionGroup() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceArmMonitorActionGroupCreateUpdate,
-		Read:   resourceArmMonitorActionGroupRead,
-		Update: resourceArmMonitorActionGroupCreateUpdate,
-		Delete: resourceArmMonitorActionGroupDelete,
+		Create: resourceMonitorActionGroupCreateUpdate,
+		Read:   resourceMonitorActionGroupRead,
+		Update: resourceMonitorActionGroupCreateUpdate,
+		Delete: resourceMonitorActionGroupDelete,
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
 		},
@@ -337,7 +337,7 @@ func resourceArmMonitorActionGroup() *schema.Resource {
 	}
 }
 
-func resourceArmMonitorActionGroupCreateUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionGroupCreateUpdate(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionGroupsClient
 	ctx, cancel := timeouts.ForCreateUpdate(meta.(*clients.Client).StopContext, d)
 	defer cancel()
@@ -408,10 +408,10 @@ func resourceArmMonitorActionGroupCreateUpdate(d *schema.ResourceData, meta inte
 
 	d.SetId(*read.ID)
 
-	return resourceArmMonitorActionGroupRead(d, meta)
+	return resourceMonitorActionGroupRead(d, meta)
 }
 
-func resourceArmMonitorActionGroupRead(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionGroupRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionGroupsClient
 	ctx, cancel := timeouts.ForRead(meta.(*clients.Client).StopContext, d)
 	defer cancel()
@@ -481,7 +481,7 @@ func resourceArmMonitorActionGroupRead(d *schema.ResourceData, meta interface{})
 	return tags.FlattenAndSet(d, resp.Tags)
 }
 
-func resourceArmMonitorActionGroupDelete(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorActionGroupDelete(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*clients.Client).Monitor.ActionGroupsClient
 	ctx, cancel := timeouts.ForDelete(meta.(*clients.Client).StopContext, d)
 	defer cancel()

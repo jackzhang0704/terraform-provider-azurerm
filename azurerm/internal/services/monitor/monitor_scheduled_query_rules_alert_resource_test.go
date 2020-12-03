@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -12,19 +12,19 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/internal/clients"
 )
 
-func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionBasic(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_AlertingActionBasic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_alert", "test")
 	ts := time.Now().Format(time.RFC3339)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_AlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigBasic(data, ts),
+				Config: testAccMonitorScheduledQueryRules_AlertingActionConfigBasic(data, ts),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_AlertExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_AlertExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -32,26 +32,26 @@ func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionBasic(t *testing.T) 
 	})
 }
 
-func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionUpdate(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_AlertingActionUpdate(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_alert", "test")
 	ts := time.Now().Format(time.RFC3339)
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_AlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigBasic(data, ts),
+				Config: testAccMonitorScheduledQueryRules_AlertingActionConfigBasic(data, ts),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_AlertExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_AlertExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigUpdate(data, ts),
+				Config: testAccMonitorScheduledQueryRules_AlertingActionConfigUpdate(data, ts),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_AlertExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_AlertExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -59,18 +59,18 @@ func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionUpdate(t *testing.T)
 	})
 }
 
-func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionComplete(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_AlertingActionComplete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_AlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigComplete(data),
+				Config: testAccMonitorScheduledQueryRules_AlertingActionConfigComplete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_AlertExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_AlertExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -78,18 +78,18 @@ func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionComplete(t *testing.
 	})
 }
 
-func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionCrossResource(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_AlertingActionCrossResource(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_alert", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_AlertDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_AlertingActionCrossResourceConfig(data),
+				Config: testAccMonitorScheduledQueryRules_AlertingActionCrossResourceConfig(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_AlertExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_AlertExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -97,7 +97,7 @@ func TestAccAzureRMMonitorScheduledQueryRules_AlertingActionCrossResource(t *tes
 	})
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigBasic(data acceptance.TestData, ts string) string {
+func testAccMonitorScheduledQueryRules_AlertingActionConfigBasic(data acceptance.TestData, ts string) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -144,7 +144,7 @@ QUERY
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomInteger, ts, ts)
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigUpdate(data acceptance.TestData, ts string) string {
+func testAccMonitorScheduledQueryRules_AlertingActionConfigUpdate(data acceptance.TestData, ts string) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -194,7 +194,7 @@ QUERY
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomInteger, ts, ts)
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_AlertingActionConfigComplete(data acceptance.TestData) string {
+func testAccMonitorScheduledQueryRules_AlertingActionConfigComplete(data acceptance.TestData) string {
 	ts := time.Now().Format(time.RFC3339)
 
 	return fmt.Sprintf(`
@@ -251,7 +251,7 @@ resource "azurerm_monitor_scheduled_query_rules_alert" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomInteger, ts, ts)
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_AlertingActionCrossResourceConfig(data acceptance.TestData) string {
+func testAccMonitorScheduledQueryRules_AlertingActionCrossResourceConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -319,7 +319,7 @@ QUERY
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomInteger, data.RandomInteger)
 }
 
-func testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy(s *terraform.State) error {
+func testCheckMonitorScheduledQueryRules_AlertDestroy(s *terraform.State) error {
 	client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ScheduledQueryRulesClient
 	ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
 
@@ -344,7 +344,7 @@ func testCheckAzureRMMonitorScheduledQueryRules_AlertDestroy(s *terraform.State)
 	return nil
 }
 
-func testCheckAzureRMMonitorScheduledQueryRules_AlertExists(resourceName string) resource.TestCheckFunc {
+func testCheckMonitorScheduledQueryRules_AlertExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		// Ensure we have enough information in state to look up in API
 		rs, ok := s.RootModule().Resources[resourceName]

@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -11,18 +11,18 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/internal/clients"
 )
 
-func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionBasic(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_LogToMetricActionBasic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_log", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_LogDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_LogDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data),
+				Config: testAccMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_LogExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_LogExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -30,25 +30,25 @@ func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionBasic(t *testing.
 	})
 }
 
-func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionUpdate(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_LogToMetricActionUpdate(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_log", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_LogDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_LogDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data),
+				Config: testAccMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_LogExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_LogExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigUpdate(data),
+				Config: testAccMonitorScheduledQueryRules_LogToMetricActionConfigUpdate(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_LogExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_LogExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -56,18 +56,18 @@ func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionUpdate(t *testing
 	})
 }
 
-func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionComplete(t *testing.T) {
+func TestAccMonitorScheduledQueryRules_LogToMetricActionComplete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_scheduled_query_rules_log", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorScheduledQueryRules_LogDestroy,
+		CheckDestroy: testCheckMonitorScheduledQueryRules_LogDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigComplete(data),
+				Config: testAccMonitorScheduledQueryRules_LogToMetricActionConfigComplete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorScheduledQueryRules_LogExists(data.ResourceName),
+					testCheckMonitorScheduledQueryRules_LogExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -75,7 +75,7 @@ func TestAccAzureRMMonitorScheduledQueryRules_LogToMetricActionComplete(t *testi
 	})
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data acceptance.TestData) string {
+func testAccMonitorScheduledQueryRules_LogToMetricActionConfigBasic(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -109,7 +109,7 @@ resource "azurerm_monitor_scheduled_query_rules_log" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigUpdate(data acceptance.TestData) string {
+func testAccMonitorScheduledQueryRules_LogToMetricActionConfigUpdate(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -145,7 +145,7 @@ resource "azurerm_monitor_scheduled_query_rules_log" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorScheduledQueryRules_LogToMetricActionConfigComplete(data acceptance.TestData) string {
+func testAccMonitorScheduledQueryRules_LogToMetricActionConfigComplete(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 resource "azurerm_resource_group" "test" {
   name     = "acctestRG-monitor-%d"
@@ -206,7 +206,7 @@ resource "azurerm_monitor_metric_alert" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger, data.RandomInteger, data.RandomInteger)
 }
 
-func testCheckAzureRMMonitorScheduledQueryRules_LogDestroy(s *terraform.State) error {
+func testCheckMonitorScheduledQueryRules_LogDestroy(s *terraform.State) error {
 	client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ScheduledQueryRulesClient
 	ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
 
@@ -231,7 +231,7 @@ func testCheckAzureRMMonitorScheduledQueryRules_LogDestroy(s *terraform.State) e
 	return nil
 }
 
-func testCheckAzureRMMonitorScheduledQueryRules_LogExists(resourceName string) resource.TestCheckFunc {
+func testCheckMonitorScheduledQueryRules_LogExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		// Ensure we have enough information in state to look up in API
 		rs, ok := s.RootModule().Resources[resourceName]

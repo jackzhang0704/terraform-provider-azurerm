@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -12,18 +12,18 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/utils"
 )
 
-func TestAccAzureRMMonitorActionRuleActionGroup_basic(t *testing.T) {
+func TestAccMonitorActionRuleActionGroup_basic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_action_group", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleActionGroupDestroy,
+		CheckDestroy: testCheckMonitorActionRuleActionGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_basic(data),
+				Config: testAccMonitorActionRuleActionGroup_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -31,69 +31,36 @@ func TestAccAzureRMMonitorActionRuleActionGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccAzureRMMonitorActionRuleActionGroup_requiresImport(t *testing.T) {
+func TestAccMonitorActionRuleActionGroup_requiresImport(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_action_group", "test")
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleActionGroupDestroy,
+		CheckDestroy: testCheckMonitorActionRuleActionGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_basic(data),
+				Config: testAccMonitorActionRuleActionGroup_basic(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
 				),
 			},
-			data.RequiresImportErrorStep(testAccAzureRMMonitorActionRuleActionGroup_requiresImport),
+			data.RequiresImportErrorStep(testAccMonitorActionRuleActionGroup_requiresImport),
 		},
 	})
 }
 
-func TestAccAzureRMMonitorActionRuleActionGroup_complete(t *testing.T) {
+func TestAccMonitorActionRuleActionGroup_complete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_action_group", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
 		PreCheck:     func() { acceptance.PreCheck(t) },
 		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleActionGroupDestroy,
+		CheckDestroy: testCheckMonitorActionRuleActionGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_complete(data),
+				Config: testAccMonitorActionRuleActionGroup_complete(data),
 				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-		},
-	})
-}
-
-func TestAccAzureRMMonitorActionRuleActionGroup_update(t *testing.T) {
-	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_action_group", "test")
-
-	resource.ParallelTest(t, resource.TestCase{
-		PreCheck:     func() { acceptance.PreCheck(t) },
-		Providers:    acceptance.SupportedProviders,
-		CheckDestroy: testCheckAzureRMMonitorActionRuleActionGroupDestroy,
-		Steps: []resource.TestStep{
-			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_basic(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_complete(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
-				),
-			},
-			data.ImportStep(),
-			{
-				Config: testAccAzureRMMonitorActionRuleActionGroup_basic(data),
-				Check: resource.ComposeTestCheckFunc(
-					testCheckAzureRMMonitorActionRuleActionGroupExists(data.ResourceName),
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
 				),
 			},
 			data.ImportStep(),
@@ -101,7 +68,40 @@ func TestAccAzureRMMonitorActionRuleActionGroup_update(t *testing.T) {
 	})
 }
 
-func testCheckAzureRMMonitorActionRuleActionGroupExists(resourceName string) resource.TestCheckFunc {
+func TestAccMonitorActionRuleActionGroup_update(t *testing.T) {
+	data := acceptance.BuildTestData(t, "azurerm_monitor_action_rule_action_group", "test")
+
+	resource.ParallelTest(t, resource.TestCase{
+		PreCheck:     func() { acceptance.PreCheck(t) },
+		Providers:    acceptance.SupportedProviders,
+		CheckDestroy: testCheckMonitorActionRuleActionGroupDestroy,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccMonitorActionRuleActionGroup_basic(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleActionGroup_complete(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+			{
+				Config: testAccMonitorActionRuleActionGroup_basic(data),
+				Check: resource.ComposeTestCheckFunc(
+					testCheckMonitorActionRuleActionGroupExists(data.ResourceName),
+				),
+			},
+			data.ImportStep(),
+		},
+	})
+}
+
+func testCheckMonitorActionRuleActionGroupExists(resourceName string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActionRulesClient
 		ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
@@ -123,7 +123,7 @@ func testCheckAzureRMMonitorActionRuleActionGroupExists(resourceName string) res
 	}
 }
 
-func testCheckAzureRMMonitorActionRuleActionGroupDestroy(s *terraform.State) error {
+func testCheckMonitorActionRuleActionGroupDestroy(s *terraform.State) error {
 	client := acceptance.AzureProvider.Meta().(*clients.Client).Monitor.ActionRulesClient
 	ctx := acceptance.AzureProvider.Meta().(*clients.Client).StopContext
 
@@ -145,8 +145,8 @@ func testCheckAzureRMMonitorActionRuleActionGroupDestroy(s *terraform.State) err
 	return nil
 }
 
-func testAccAzureRMMonitorActionRuleActionGroup_basic(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleActionGroup_template(data)
+func testAccMonitorActionRuleActionGroup_basic(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleActionGroup_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -158,8 +158,8 @@ resource "azurerm_monitor_action_rule_action_group" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleActionGroup_requiresImport(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleActionGroup_basic(data)
+func testAccMonitorActionRuleActionGroup_requiresImport(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleActionGroup_basic(data)
 	return fmt.Sprintf(`
 %s
 
@@ -171,8 +171,8 @@ resource "azurerm_monitor_action_rule_action_group" "import" {
 `, template)
 }
 
-func testAccAzureRMMonitorActionRuleActionGroup_complete(data acceptance.TestData) string {
-	template := testAccAzureRMMonitorActionRuleActionGroup_template(data)
+func testAccMonitorActionRuleActionGroup_complete(data acceptance.TestData) string {
+	template := testAccMonitorActionRuleActionGroup_template(data)
 	return fmt.Sprintf(`
 %s
 
@@ -232,7 +232,7 @@ resource "azurerm_monitor_action_rule_action_group" "test" {
 `, template, data.RandomInteger)
 }
 
-func testAccAzureRMMonitorActionRuleActionGroup_template(data acceptance.TestData) string {
+func testAccMonitorActionRuleActionGroup_template(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}

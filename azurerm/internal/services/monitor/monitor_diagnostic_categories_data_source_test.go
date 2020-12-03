@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/internal/acceptance"
 )
 
-func TestAccDataSourceArmMonitorDiagnosticCategories_appService(t *testing.T) {
+func TestAccMonitorDiagnosticCategoriesDataSource_appService(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_diagnostic_categories", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -16,7 +16,7 @@ func TestAccDataSourceArmMonitorDiagnosticCategories_appService(t *testing.T) {
 		Providers: acceptance.SupportedProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceArmMonitorDiagnosticCategories_appService(data),
+				Config: testAccDataSourceMonitorDiagnosticCategories_appService(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "metrics.#"),
 					resource.TestCheckResourceAttrSet(data.ResourceName, "logs.#"),
@@ -26,7 +26,7 @@ func TestAccDataSourceArmMonitorDiagnosticCategories_appService(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceArmMonitorDiagnosticCategories_storageAccount(t *testing.T) {
+func TestAccMonitorDiagnosticCategoriesDataSource_storageAccount(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_diagnostic_categories", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -34,7 +34,7 @@ func TestAccDataSourceArmMonitorDiagnosticCategories_storageAccount(t *testing.T
 		Providers: acceptance.SupportedProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceArmMonitorDiagnosticCategories_storageAccount(data),
+				Config: testAccDataSourceMonitorDiagnosticCategories_storageAccount(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "metrics.#"),
 					resource.TestCheckResourceAttrSet(data.ResourceName, "logs.#"),
@@ -44,7 +44,7 @@ func TestAccDataSourceArmMonitorDiagnosticCategories_storageAccount(t *testing.T
 	})
 }
 
-func testAccDataSourceArmMonitorDiagnosticCategories_appService(data acceptance.TestData) string {
+func testAccDataSourceMonitorDiagnosticCategories_appService(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -79,7 +79,7 @@ data "azurerm_monitor_diagnostic_categories" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger, data.RandomInteger)
 }
 
-func testAccDataSourceArmMonitorDiagnosticCategories_storageAccount(data acceptance.TestData) string {
+func testAccDataSourceMonitorDiagnosticCategories_storageAccount(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}

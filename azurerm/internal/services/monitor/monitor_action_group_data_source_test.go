@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/terraform-providers/terraform-provider-azurerm/azurerm/internal/acceptance"
 )
 
-func TestAccDataSourceArmMonitorActionGroup_basic(t *testing.T) {
+func TestAccMonitorActionGroupDataSource_basic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_action_group", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -17,7 +17,7 @@ func TestAccDataSourceArmMonitorActionGroup_basic(t *testing.T) {
 		Providers: acceptance.SupportedProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceArmMonitorActionGroup_basic(data),
+				Config: testAccDataSourceMonitorActionGroup_basic(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "id"),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
@@ -38,7 +38,7 @@ func TestAccDataSourceArmMonitorActionGroup_basic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceArmMonitorActionGroup_disabledBasic(t *testing.T) {
+func TestAccMonitorActionGroupDataSource_disabledBasic(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_action_group", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccDataSourceArmMonitorActionGroup_disabledBasic(t *testing.T) {
 		Providers: acceptance.SupportedProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceArmMonitorActionGroup_disabledBasic(data),
+				Config: testAccDataSourceMonitorActionGroup_disabledBasic(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "id"),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "false"),
@@ -67,7 +67,7 @@ func TestAccDataSourceArmMonitorActionGroup_disabledBasic(t *testing.T) {
 	})
 }
 
-func TestAccDataSourceArmMonitorActionGroup_complete(t *testing.T) {
+func TestAccMonitorActionGroupDataSource_complete(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_action_group", "test")
 
 	aaName := fmt.Sprintf("acctestAA-%d", data.RandomInteger)
@@ -85,7 +85,7 @@ func TestAccDataSourceArmMonitorActionGroup_complete(t *testing.T) {
 		Providers: acceptance.SupportedProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceArmMonitorActionGroup_complete(data),
+				Config: testAccDataSourceMonitorActionGroup_complete(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "id"),
 					resource.TestCheckResourceAttr(data.ResourceName, "enabled", "true"),
@@ -136,7 +136,7 @@ func TestAccDataSourceArmMonitorActionGroup_complete(t *testing.T) {
 	})
 }
 
-func testAccDataSourceArmMonitorActionGroup_basic(data acceptance.TestData) string {
+func testAccDataSourceMonitorActionGroup_basic(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -160,7 +160,7 @@ data "azurerm_monitor_action_group" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger)
 }
 
-func testAccDataSourceArmMonitorActionGroup_disabledBasic(data acceptance.TestData) string {
+func testAccDataSourceMonitorActionGroup_disabledBasic(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -185,7 +185,7 @@ data "azurerm_monitor_action_group" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomInteger)
 }
 
-func testAccDataSourceArmMonitorActionGroup_complete(data acceptance.TestData) string {
+func testAccDataSourceMonitorActionGroup_complete(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}

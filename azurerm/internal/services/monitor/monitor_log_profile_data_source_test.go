@@ -1,4 +1,4 @@
-package tests
+package monitor
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 // Azure only being happy about provisioning one per subscription at once
 // (which our test suite can't easily workaround)
 
-func testAccDataSourceAzureRMMonitorLogProfile_storageaccount(t *testing.T) {
+func testAccDataSourceMonitorLogProfile_storageaccount(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_log_profile", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -21,7 +21,7 @@ func testAccDataSourceAzureRMMonitorLogProfile_storageaccount(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAzureRMMonitorLogProfile_storageaccountConfig(data),
+				Config: testAccDataSourceMonitorLogProfile_storageaccountConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "name"),
 					resource.TestCheckResourceAttrSet(data.ResourceName, "categories.#"),
@@ -37,7 +37,7 @@ func testAccDataSourceAzureRMMonitorLogProfile_storageaccount(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAzureRMMonitorLogProfile_eventhub(t *testing.T) {
+func testAccDataSourceMonitorLogProfile_eventhub(t *testing.T) {
 	data := acceptance.BuildTestData(t, "data.azurerm_monitor_log_profile", "test")
 
 	resource.ParallelTest(t, resource.TestCase{
@@ -46,7 +46,7 @@ func testAccDataSourceAzureRMMonitorLogProfile_eventhub(t *testing.T) {
 		CheckDestroy: testCheckAzureRMLogProfileDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceAzureRMMonitorLogProfile_eventhubConfig(data),
+				Config: testAccDataSourceMonitorLogProfile_eventhubConfig(data),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttrSet(data.ResourceName, "name"),
 					resource.TestCheckResourceAttrSet(data.ResourceName, "categories.#"),
@@ -62,7 +62,7 @@ func testAccDataSourceAzureRMMonitorLogProfile_eventhub(t *testing.T) {
 	})
 }
 
-func testAccDataSourceAzureRMMonitorLogProfile_storageaccountConfig(data acceptance.TestData) string {
+func testAccDataSourceMonitorLogProfile_storageaccountConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
@@ -106,7 +106,7 @@ data "azurerm_monitor_log_profile" "test" {
 `, data.RandomInteger, data.Locations.Primary, data.RandomString, data.RandomInteger, data.Locations.Primary)
 }
 
-func testAccDataSourceAzureRMMonitorLogProfile_eventhubConfig(data acceptance.TestData) string {
+func testAccDataSourceMonitorLogProfile_eventhubConfig(data acceptance.TestData) string {
 	return fmt.Sprintf(`
 provider "azurerm" {
   features {}
